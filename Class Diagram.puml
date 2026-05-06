@@ -1,0 +1,51 @@
+@startuml
+class SentimentAnalyzer {
+  - models: dict
+  - models_loaded: dict
+  + analyze(text: str, model_type: str): dict
+  + compare_models(text: str): dict
+}
+
+class VADERAnalyzer {
+  - vader_analyzer: SentimentIntensityAnalyzer
+  + analyze_with_vader(text: str): dict
+}
+
+class TransformersAnalyzer {
+  - pipeline: transformers.Pipeline
+  - model_name: str
+  + analyze_with_transformers(text: str): dict
+}
+
+class WebController {
+  - analyzer: SentimentAnalyzer
+  - stats_mgr: StatisticsManager
+  - history_mgr: HistoryManager
+  + analyze_endpoint(request): Response
+  + batch_analyze_endpoint(request): Response
+  + get_stats(): Response
+}
+
+class StatisticsManager {
+  - total_analyzed: int
+  - positive_count: int
+  - negative_count: int
+  - neutral_count: int
+  + update_stats(result: dict): void
+  + get_stats(): dict
+}
+
+class HistoryManager {
+  - history: list
+  + add_entry(entry: dict): void
+  + get_history(limit: int): list
+  + clear_history(): void
+}
+
+SentimentAnalyzer <|-- VADERAnalyzer
+SentimentAnalyzer <|-- TransformersAnalyzer
+WebController --> SentimentAnalyzer : uses
+WebController --> StatisticsManager : uses
+WebController --> HistoryManager : uses
+StatisticsManager --> HistoryManager : may read
+@enduml

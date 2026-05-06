@@ -1,0 +1,37 @@
+@startuml
+package "Клиентская часть" {
+  component "Web UI\n(HTML/CSS/JS)" as WebUI
+  component "API Client\n(cURL, Postman)" as APIClient
+}
+
+package "Серверная часть" {
+  component "Flask Application" as FlaskApp {
+    component "Controllers\n(Routes)" as Routes
+    component "Middleware\n(validation, rate-limit)" as Middleware
+  }
+  
+  component "Business Logic Layer" as BLL {
+    component "SentimentAnalyzer" as Analyzer
+    component "StatisticsManager" as Stats
+    component "HistoryManager" as History
+  }
+  
+  component "Data Layer" as Data {
+    component "In-Memory Storage" as InMemory
+    component "PostgreSQL\n(опционально)" as DB
+  }
+}
+
+package "Модели ML" {
+  component "VADER Model" as VADER
+  component "RuBERT Model" as RuBERT
+}
+
+WebUI --> FlaskApp : HTTP
+APIClient --> FlaskApp : HTTP
+FlaskApp --> BLL : calls
+BLL --> Data : read/write
+BLL --> VADER : uses
+BLL --> RuBERT : uses
+InMemory <.. DB : may replace
+@enduml

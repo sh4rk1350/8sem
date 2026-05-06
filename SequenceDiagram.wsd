@@ -1,0 +1,45 @@
+@startuml
+actor User
+participant "WebController" as WC
+participant "SentimentAnalyzer" as SA
+participant "VADERAnalyzer" as VA
+participant "TransformersAnalyzer" as TA
+participant "StatisticsManager" as SM
+participant "HistoryManager" as HM
+
+User -> WC: POST /analyze (text, model_type)
+activate WC
+WC -> WC: validate input
+alt model_type == "vader"
+  WC -> SA: analyze(text, "vader")
+  activate SA
+  SA -> VA: analyze_with_vader(text)
+  activate VA
+  VA --> SA: result (sentiment, scores)
+  deactivate VA
+  SA --> WC: result
+  deactivate SA
+else model_type == "transformers"
+  WC -> SA: analyze(text, "transformers")
+  activate SA
+  SA -> TA: analyze_with_transformers(text)
+  activate TA
+  TA --> SA: result (sentiment, scores)
+  deactivate TA
+  SA --> WC: result
+  deactivate SA
+end
+
+WC -> SM: update_stats(result)
+activate SM
+SM --> WC: stats_updated
+deactivate SM
+
+WC -> HM: add_entry(result)
+activate HM
+HM --> WC: entry_added
+deactivate HM
+
+WC --> User: JSON response (sentiment, confidence, scores)
+deactivate WC
+@enduml

@@ -1,0 +1,24 @@
+@startuml
+left to right direction
+actor "Пользователь" as User
+actor "Администратор" as Admin
+
+rectangle "Система анализа тональности" {
+  usecase "Анализ одного отзыва" as UC1
+  usecase "Выбор модели анализа" as UC2
+  usecase "Пакетный анализ отзывов" as UC3
+  usecase "Просмотр истории запросов" as UC4
+  usecase "Просмотр статистики" as UC5
+  usecase "Управление моделями (загрузка/выгрузка)" as UC6
+  usecase "Просмотр отчётов" as UC7
+}
+
+User --> UC1
+User --> UC2
+User --> UC3
+User --> UC4
+User --> UC5
+Admin --> UC6
+Admin --> UC7
+UC7 ..> UC5 : <<extend>>
+@enduml
