@@ -1,0 +1,45 @@
+graph TB
+    subgraph HEADER[ШАПКА]
+        H1["<b>АНАЛИЗАТОР ТОНАЛЬНОСТИ ОТЗЫВОВ</b><br/>Разработка веб-ресурса для анализа текстовых отзывов<br/>Дипломный проект"]
+    end
+
+    subgraph MAIN[ОСНОВНАЯ ОБЛАСТЬ]
+        direction LR
+        subgraph LEFT[ВВОД]
+            L1["<b>Введите текст отзыва</b>"]
+            L2["Текстовая область<br/>(3–5000 символов)"]
+            L3["<i>Пример: Отличный товар, всем рекомендую!</i>"]
+            L4["Модель: [<b>RuBERT</b> ▼]"] 
+            L5["[ АНАЛИЗИРОВАТЬ ]  [ ОЧИСТИТЬ ]  [ ПРИМЕР ]"]
+        end
+        
+        subgraph RIGHT[РЕЗУЛЬТАТЫ]
+            R1["<b>Тональность:</b> 🟢 ПОЗИТИВНЫЙ"]
+            R2["<b>Уверенность:</b> ████████████░░░░ 87%"]
+            R3["<b>Детально:</b><br/>Позитив 87% ████████░░<br/>Нейтрал 10% ██░░░░░░<br/>Негатив  3% ░░░░░░░░"]
+            R4["<i>Модель: RuBERT | Длина: 124 симв.</i>"]
+        end
+    end
+
+    subgraph BOTTOM[НИЖНЯЯ ОБЛАСТЬ]
+        direction LR
+        B1["<b>СТАТИСТИКА</b><br/>Всего: 47<br/>🟢 28 (60%)<br/>🔴 12 (25%)<br/>🟡 7 (15%)"]
+        B2["<b>ИСТОРИЯ (последние)</b><br/>👍 15:23 Отличный то...<br/>👎 15:20 Ужасное к...<br/>😐 15:15 Нормально...<br/>[ Обновить ]"]
+        B3["<b>О МОДЕЛЯХ</b><br/>RuBERT: точность 87%<br/>VADER: скорость 1000 т/с"]
+    end
+
+    subgraph FOOTER[ФУТЕР]
+        F1["© Дипломная работа | Текущее время: 15:30:24"]
+    end
+
+    HEADER --> MAIN
+    MAIN --> BOTTOM
+    BOTTOM --> FOOTER
+    
+    style LEFT fill:#f9f9f9,stroke:#333,stroke-width:1px
+    style RIGHT fill:#e8f4f8,stroke:#333,stroke-width:1px
+    style B1 fill:#f0f0f0,stroke:#ccc
+    style B2 fill:#f0f0f0,stroke:#ccc
+    style B3 fill:#f0f0f0,stroke:#ccc
+    style HEADER fill:#2c3e50,color:white
+    style FOOTER fill:#ecf0f1,stroke:#bdc3c7
