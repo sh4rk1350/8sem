@@ -1,0 +1,32 @@
+graph TB
+    subgraph PKG_HEADER[ШАПКА]
+        PH["<b>ПАКЕТНЫЙ АНАЛИЗ ОТЗЫВОВ</b><br/>Обработка до 100 текстов за раз"]
+    end
+
+    subgraph PKG_MAIN[ОСНОВНАЯ ОБЛАСТЬ]
+        direction LR
+        subgraph PKG_LEFT[ВВОД ПАКЕТА]
+            PL1["<b>Введите отзывы (каждый с новой строки)</b>"]
+            PL2["Текстовая область (многострочная)<br/>Отличный товар!<br/>Ужасное качество.<br/>Неплохо, но дорого.<br/>Быстрая доставка."]
+            PL3["Модель: [<b>VADER</b> ▼]"]
+            PL4["[ АНАЛИЗИРОВАТЬ ВСЕ ]  [ ОЧИСТИТЬ ]"]
+        end
+        
+        subgraph PKG_RIGHT[РЕЗУЛЬТАТЫ ПАКЕТА]
+            PR1["<b>Обработано: 4 текста</b>"]
+            PR2["🟢 Позитивных: 2 (50%)<br/>🔴 Негативных: 1 (25%)<br/>🟡 Нейтральных: 1 (25%)"]
+            PR3["<b>Детали:</b><br/>1. Отличный товар! → 🟢 94%<br/>2. Ужасное качество → 🔴 88%<br/>3. Неплохо, но дорого → 🟡 67%<br/>4. Быстрая доставка → 🟢 91%"]
+        end
+    end
+
+    subgraph PKG_BOTTOM[ДОПОЛНИТЕЛЬНО]
+        PB1["[ 📥 Скачать отчет в CSV ]  [ 🔙 Вернуться к одиночному анализу ]  [ 📊 Полная история ]"]
+    end
+
+    PKG_HEADER --> PKG_MAIN
+    PKG_MAIN --> PKG_BOTTOM
+
+    style PKG_LEFT fill:#faf9f0,stroke:#333,stroke-width:1px
+    style PKG_RIGHT fill:#e0f2e9,stroke:#333,stroke-width:1px
+    style PKG_HEADER fill:#2c3e50,color:white
+    style PKG_BOTTOM fill:#f5f5dc
